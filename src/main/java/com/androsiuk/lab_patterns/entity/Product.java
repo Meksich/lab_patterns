@@ -40,4 +40,11 @@ public class Product {
     @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false)
     private Seller seller;
 
+    public Product(String name, Double price, Availability isAvailable, Category category, Seller seller) {
+        this.name = name;
+        this.price = price;
+        this.isAvailable = isAvailable;
+        this.category = category;
+        this.seller = seller;
+    }
 }
