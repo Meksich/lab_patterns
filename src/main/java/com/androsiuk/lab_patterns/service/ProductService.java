@@ -3,6 +3,7 @@ package com.androsiuk.lab_patterns.service;
 import com.androsiuk.lab_patterns.DTO.CsvDTO;
 import com.androsiuk.lab_patterns.csv_config.CsvConfig;
 import com.androsiuk.lab_patterns.entity.Product;
+import com.androsiuk.lab_patterns.mapper.ProductMapper;
 import com.androsiuk.lab_patterns.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,12 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductService extends com.androsiuk.lab_patterns.service.Service<Product> {
     private ProductRepository productRepository;
+    private ProductMapper productMapper;
+
+    public List<Product> writeCsvToDb() {
+        List<Product> productList = CsvConfig.readProductsFromCsv().stream().map(productMapper::map).toList();
+        return productRepository.saveAll(productList);
+    }
 
     @Override
     public JpaRepository<Product, Integer> getRepository() {
@@ -27,7 +34,6 @@ public class ProductService extends com.androsiuk.lab_patterns.service.Service<P
     }
 
     public List<CsvDTO> getProductsFromCsvFile() {
-        List<CsvDTO> dtoList = CsvConfig.readProductsFromCsv();
-        return dtoList;
+        return CsvConfig.readProductsFromCsv();
     }
 }

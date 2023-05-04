@@ -25,12 +25,7 @@ public class ProductMapper implements Mapper<Product, ProductDTO>{
     }
 
     public Product map(CsvDTO csvDTO) {
-        return new Product(
-                csvDTO.getName(),
-                csvDTO.getPrice(),
-                csvDTO.getIsAvailable(),
-                csvDTO.getCategory(),
-                sellerService.get(csvDTO.getSeller_id())
-        );
+        return new Product(csvDTO.getName(), csvDTO.getPrice(), csvDTO.getIsAvailable(),
+                csvDTO.getCategory(), sellerService.get(csvDTO.getSeller_id()));
     }
 }
